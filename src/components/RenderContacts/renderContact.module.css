@@ -1,0 +1,51 @@
+/* CSS */
+.button24 {
+  background: #ff5020;
+  border: 1px solid #ff4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito, roboto, proxima-nova, 'proxima nova', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 10px;
+  min-height: 40px;
+  outline: 0;
+  padding: 2px 6px;
+  margin-left: 20px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button24:hover,
+.button24:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #ff4742;
+}
+
+.button24:active {
+  opacity: 0.5;
+}
+
+.text {
+  display: block;
+  float: left; /* makes the element act like inline block */
+  clear: left;
+  font-weight: 700;
+}
+
+.contactsList {
+  list-style: none;
+  display: block;
+  float: left; /* makes the element act like inline block */
+  clear: left;
+}

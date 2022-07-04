@@ -1,0 +1,6 @@
+.text {
+  display: block;
+  width: 200px;
+  float: left; /* makes the element act like inline block */
+  clear: left;
+}
