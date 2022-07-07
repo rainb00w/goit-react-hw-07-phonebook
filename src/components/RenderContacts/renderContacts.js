@@ -1,22 +1,42 @@
 import { useSelector } from 'react-redux';
+import { useMemo } from 'react';
 import {
   useGetAllContactsQuery,
   useDeleteContactMutation,
 } from '../../redux/fetchApi';
 import s from './renderContact.module.css';
+import { createSelector } from '@reduxjs/toolkit';
 
-const RenderContacts = () => {
-  const [deleteContact, result] = useDeleteContactMutation();
-  const { data, error, isLoading } = useGetAllContactsQuery();
-  // console.log('DATA', data);
+const useContacts = () => {
   const filterValue = useSelector(state => state.filter?.value);
-
-  // console.log(filterValue);
   const normalizedFilter = filterValue.toLowerCase();
 
-  const filteredContacts = data?.filter(contact =>
-    contact.name.toLowerCase().includes(normalizedFilter)
-  );
+  const selectedContacts = useMemo(() => {
+    return createSelector(
+      [response => response.data, (_, filter) => filter],
+      (contacts, filter) => {
+        return (
+          contacts?.filter(contact =>
+            contact.name.toLowerCase().includes(filter)
+          ) ?? []
+        );
+      }
+    );
+  }, []);
+
+  return useGetAllContactsQuery(undefined, {
+    selectFromResult(result) {
+      return {
+        ...result,
+        filteredContatcs: selectedContacts(result, normalizedFilter),
+      };
+    },
+  });
+};
+
+const RenderContacts = () => {
+  const { filteredContatcs, error, isLoading } = useContacts();
+  const [deleteContact, result] = useDeleteContactMutation();
 
   return (
     <>
@@ -26,7 +46,7 @@ const RenderContacts = () => {
         <p>Contacts are loading, please wait.</p>
       ) : (
         <ul className={s.contactsList}>
-          {filteredContacts?.map(({ id, name, phone }) => (
+          {filteredContatcs?.map(({ id, name, phone }) => (
             <li key={id}>
               <p>
                 <span className="boldFont">{name}</span> : ( {phone} )
