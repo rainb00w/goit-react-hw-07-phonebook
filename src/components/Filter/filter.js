@@ -1,14 +1,14 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addFilter } from '../../redux/store';
+import { createFilter } from '../../redux/filterSlice';
 import s from './/filter.module.css';
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const value = useSelector(state => state.contacts.filter);
+  const filterValue = useSelector(state => state.filter.value);
 
   const changeFilter = evnt => {
-    dispatch(addFilter(evnt.currentTarget.value));
+    dispatch(createFilter(evnt.currentTarget.value));
   };
 
   return (
@@ -17,7 +17,7 @@ const Filter = () => {
       <input
         className={s.text}
         type="text"
-        value={value}
+        value={filterValue}
         onChange={changeFilter}
       />
     </>
